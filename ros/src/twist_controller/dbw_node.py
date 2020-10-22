@@ -89,7 +89,7 @@ class DBWNode(object):
                 self.publish(self.throttle,self.brake,self.steering)
             rate.sleep()
 
-    def dbw_enabled(self,msg):
+    def dbw_enabled_cb(self,msg):
         self.dbw_enabled=msg
 
     def twist_cb(self,msg):
