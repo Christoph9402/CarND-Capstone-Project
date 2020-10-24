@@ -48,7 +48,6 @@ class WaypointUpdater(object):
 
     def loop(self):
         rate = rospy.Rate(50)
-        rospy.loginfo("test")
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
                 self.publish_waypoints()
@@ -112,6 +111,7 @@ class WaypointUpdater(object):
         if not self.waypoints_2d:
             self.waypoints_2d=[[waypoint.pose.pose.position.x,waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
             self.waypoint_tree=KDTree(self.waypoints_2d)
+        rospy.logdebug("%d base_waypoints received", len(self.base_lane))
 
     def traffic_cb(self, msg):
         self.stopline_wp_idx = msg.data
