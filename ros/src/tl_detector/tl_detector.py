@@ -106,7 +106,7 @@ class TLDetector(object):
 
         """
         #TODO implement
-        closest_idx=self.waypoint_tree.query([x,y],1)[1]
+        closest_idx=self.waypoints_tree.query([x,y],1)[1]
         return closest_idx
 
     def get_light_state(self, light):
@@ -119,7 +119,6 @@ class TLDetector(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
-        rospy.loginfo("Status: ", light.state)
 
         return light.state
         #if(not self.has_image):
