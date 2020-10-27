@@ -1,4 +1,8 @@
 from styx_msgs.msg import TrafficLight
+import rospy
+import numpy as np
+import cv2
+import tensorflow as tf
 
 class TLClassifier(object):
     def __init__(self):
