@@ -47,8 +47,8 @@ class WaypointUpdater(object):
         self.loop()
 
     def loop(self):
-        test='This is a test'
-        rospy.loginfo(test)
+        rospy.loginfo("test1")
+        print("test2")
         rate = rospy.Rate(50)
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
@@ -95,7 +95,6 @@ class WaypointUpdater(object):
         for i, wp in enumerate(waypoints):
             p=Waypoint()
             p.pose=wp.pose
-            print('test2')
             stop_idx=max(self.stopline_wp_idx - closest_idx - 2, 0)
             dist=self.distance(waypoints,i,stop_idx)
             vel=math.sqrt(2*MAX_DECEL*dist)
