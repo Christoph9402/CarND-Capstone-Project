@@ -28,7 +28,7 @@ MAX_DECEL = .5
 
 class WaypointUpdater(object):
     def __init__(self):
-        rospy.init_node('waypoint_updater')
+        rospy.init_node('waypoint_updater',log_level=rospy.DEBUG)
         # TODO: Add other member variables you need below
         self.pose = None
         self.base_lane = None
