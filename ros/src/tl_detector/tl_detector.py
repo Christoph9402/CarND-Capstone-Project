@@ -78,7 +78,6 @@ class TLDetector(object):
         self.has_image = True
         self.camera_image = msg
         light_wp, state = self.process_traffic_lights()
-
         '''
         Publish upcoming red lights at camera frequency.
         Each predicted state has to occur `STATE_COUNT_THRESHOLD` number
@@ -108,12 +107,10 @@ class TLDetector(object):
         """
         closest_light = None
         line_wp_idx = None
-
         # List of positions that correspond to the line to stop in front of for a given intersection
         stop_line_positions = self.config['stop_line_positions']
         if(self.pose):
             car_wp_idx = self.get_closest_waypoint(self.pose.pose.position.x,self.pose.pose.position.y)
-
         diff=len(self.waypoints.waypoints)
         for i, light in enumerate(self.lights):
             line = stop_line_positions[i]
@@ -123,11 +120,9 @@ class TLDetector(object):
                 diff=d
                 closest_light=light
                 line_wp_idx=temp_wp_idx
-
         if closest_light:
             state = self.get_light_state(closest_light)
             return line_wp_idx, state
-
         return -1, TrafficLight.UNKNOWN
 
     def get_closest_waypoint(self, x,y):
@@ -140,7 +135,6 @@ class TLDetector(object):
             int: index of the closest waypoint in self.waypoints
 
         """
-        #TODO implement
         closest_idx=self.waypoints_tree.query([x,y],1)[1]
         return closest_idx
 
@@ -154,14 +148,10 @@ class TLDetector(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
-
-        #return light.state
         if(not self.has_image):
             self.prev_light_loc = None
             return False
-
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-
         #Get classification
         return self.light_classifier.get_classification(cv_image)
 
