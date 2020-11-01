@@ -2,12 +2,19 @@ from styx_msgs.msg import TrafficLight
 import rospy
 import numpy as np
 import cv2
+import yaml
 import tensorflow as tf
 
 class TLClassifier(object):
     def __init__(self):
-        #TODO load classifier
-        pass
+        self.config=yaml.load(rospy.get_param("/traffic_light_config"))
+        self.model_graph = tf.Graph()
+
+        self.state=TrafficLight.UNKNOWN
+
+        with tf.Session(graph=self.model_graph,config=self.config) as sess:
+            self.session=sess
+
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
@@ -20,4 +27,31 @@ class TLClassifier(object):
 
         """
         #TODO implement light color prediction
-        return TrafficLight.UNKNOWN
+        image_tensor=self.model_graph.get_tensor_by_name('image_tensor:0')
+        boxes_tensor=self.model_graph.get_tensor_by_name('boxes_tensor:0')
+        score_tensor = self.model_graph.get_tensor_by_name('score_tensor:0')
+        classes_tensor = self.model_graph.get_tensor_by_name('classes_tensor:0')
+
+        #img=cv2.resize(image,(512,512))
+        #img=cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
+
+        (boxes,scores,classes) = self.session.run([boxes_tensor,score_tensor,classes_tensor],feed_dict={image_tensor:np.expand_dims(img,axis=0)})
+
+        classes=np.squeeze(classes)
+        scores=np.squeeze(scores)
+        boxes=np.squeeze(boxes)
+
+        for i in enumerate(boxes):
+            if scores[i] > 0.5:
+                light_state=self.classes[classes[i]]
+                if light_state==0:
+                    self.state=TrafficLight.RED
+                elif light_state==1:
+                    self.state=TrafficLight.YELLOW
+                elif light_state==2:
+                    self.state=TrafficLight.GREEN
+                else:
+                    self.state=TrafficLight.UNKNOWN
+        return self.state
+
+        #return TrafficLight.UNKNOWN
