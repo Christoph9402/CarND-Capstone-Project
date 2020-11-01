@@ -32,7 +32,7 @@ class TLClassifier(object):
         score_tensor = self.model_graph.get_tensor_by_name('score_tensor:0')
         classes_tensor = self.model_graph.get_tensor_by_name('classes_tensor:0')
 
-        #img=cv2.resize(image,(512,512))
+        img=cv2.resize(image,(512,512))
         #img=cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
 
         (boxes,scores,classes) = self.session.run([boxes_tensor,score_tensor,classes_tensor],feed_dict={image_tensor:np.expand_dims(img,axis=0)})
