@@ -53,8 +53,6 @@ class WaypointUpdater(object):
         rate = rospy.Rate(5)
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
-                rospy.loginfo("test1")
-                print("test2")
                 self.publish_waypoints()
             rate.sleep()
 
