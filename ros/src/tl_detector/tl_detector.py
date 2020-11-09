@@ -122,7 +122,6 @@ class TLDetector(object):
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
                 diff=d
-                rospy.loginfo(diff)
                 closest_light=light
                 line_wp_idx=temp_wp_idx
 

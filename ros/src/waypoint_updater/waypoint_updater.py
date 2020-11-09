@@ -23,7 +23,7 @@ as well as to verify your TL classifier.
 TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
-LOOKAHEAD_WPS = 100 # Number of waypoints we will publish. You can change this number
+LOOKAHEAD_WPS = 50 # Number of waypoints we will publish. You can change this number
 MAX_DECEL = .5
 
 class WaypointUpdater(object):
@@ -75,7 +75,7 @@ class WaypointUpdater(object):
     def publish_waypoints(self):
         final_lane=self.generate_lane()
         self.final_waypoints_pub.publish(final_lane)
-        #rospy.loginfo("Published waypoints!")
+        rospy.loginfo("Published waypoints!")
 
     def generate_lane(self):
         lane=Lane()
@@ -115,7 +115,6 @@ class WaypointUpdater(object):
 
     def traffic_cb(self, msg):
         self.stopline_wp_idx = msg.data
-        rospy.loginfo(self.stopline_wp_idx)
 
     def obstacle_cb(self, msg):
         # TODO: Callback for /obstacle_waypoint message. We will implement it later
