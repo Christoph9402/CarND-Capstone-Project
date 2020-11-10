@@ -121,7 +121,7 @@ class TLDetector(object):
             temp_wp_idx=self.get_closest_waypoint(line[0],line[1])
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
-                if 10 <= d < 300:
+                if 5 <= d < 300:
                     diff=d
                     closest_light=light
                     line_wp_idx=temp_wp_idx
@@ -134,6 +134,9 @@ class TLDetector(object):
         return -1, TrafficLight.UNKNOWN
 
     def safe_image(self,image,state):
+        cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
+        time=rospy.get_time()
+        cv2.imwrite('/home/students/Pictures/SimulatorImages/'+str(state) + str(time)+'.jpg',cv2_img)
         rospy.loginfo("Image saved")
 
         if state == 0:
