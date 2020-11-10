@@ -126,7 +126,7 @@ class TLDetector(object):
                 line_wp_idx=temp_wp_idx
                 if 0 <= d < 150:
                     self.safe_image(img)
-                    rospy.loginfo("Image saved")
+
 
         if closest_light:
             state = self.get_light_state(closest_light)
@@ -135,8 +135,8 @@ class TLDetector(object):
 
         return -1, TrafficLight.UNKNOWN
 
-    def safe_image(self):
-        pass
+    def safe_image(self,image):
+        rospy.loginfo("Image saved")
 
     def get_closest_waypoint(self, x,y):
         """Identifies the closest path waypoint to the given position
