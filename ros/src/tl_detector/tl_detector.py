@@ -121,7 +121,7 @@ class TLDetector(object):
             temp_wp_idx=self.get_closest_waypoint(line[0],line[1])
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
-                if 0 <= d < 150:
+                if 10 <= d < 300:
                     diff=d
                     closest_light=light
                     line_wp_idx=temp_wp_idx
@@ -135,7 +135,15 @@ class TLDetector(object):
 
     def safe_image(self,image,state):
         rospy.loginfo("Image saved")
-        rospy.loginfo(state)
+
+        if state == 0:
+            rospy.loginfo("Red")
+        elif state ==1:
+            rospy.loginfo("Yellow")
+        elif state ==2:
+            rospy.loginfo("Green")
+        rospy.loginfo("---------------------------------------------")
+
 
     def get_closest_waypoint(self, x,y):
         """Identifies the closest path waypoint to the given position
