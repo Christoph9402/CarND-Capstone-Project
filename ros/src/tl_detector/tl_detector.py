@@ -77,7 +77,7 @@ class TLDetector(object):
         #rate=rospy.Rate(5)
         self.has_image = True
         self.camera_image = msg
-        light_wp, state = self.process_traffic_lights()
+        light_wp, state = self.process_traffic_lights(self.camera_image)
 
         '''
         Publish upcoming red lights at camera frequency.
@@ -97,7 +97,7 @@ class TLDetector(object):
             self.upcoming_red_light_pub.publish(Int32(self.last_wp))
         self.state_count += 1
 
-    def process_traffic_lights(self):
+    def process_traffic_lights(self,img):
         """Finds closest visible traffic light, if one exists, and determines its
             location and color
 
@@ -124,13 +124,19 @@ class TLDetector(object):
                 diff=d
                 closest_light=light
                 line_wp_idx=temp_wp_idx
-                rospy.loginfo(line_wp_idx)
+                if 0 <= d < 150:
+                    self.safe_image(img)
+                    rospy.loginfo("Image saved")
 
         if closest_light:
             state = self.get_light_state(closest_light)
+            rospy.loginfo(state)
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
+
+    def safe_image(self):
+        pass
 
     def get_closest_waypoint(self, x,y):
         """Identifies the closest path waypoint to the given position
