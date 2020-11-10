@@ -136,7 +136,7 @@ class TLDetector(object):
     def safe_image(self,image,state):
         cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
         time=rospy.get_time()
-        cv2.imwrite('/home/students/Pictures/SimulatorImages/'+str(state) + str(time)+'.jpg',cv2_img)
+        cv2.imwrite('~/home/students/Pictures/SimulatorImages/'+str(state) + str(time)+'.jpg',cv2_img)
         rospy.loginfo("Image saved")
 
         if state == 0:
