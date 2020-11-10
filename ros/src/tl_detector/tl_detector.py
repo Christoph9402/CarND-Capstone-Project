@@ -134,15 +134,10 @@ class TLDetector(object):
         return -1, TrafficLight.UNKNOWN
 
     def safe_image(self,image,state):
-        try:
-            cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
-        except:
-            rospy.loginfo("cv2_img konnte nicht erstellt werden")
+        cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
+        rospy.loginfo("cv2_img konnte nicht erstellt werden")
         time=rospy.get_time()
-        try:
-            cv2.imwrite('~/home/student/Pictures/SimulatorImages/'+str(state) + str(time)+'.jpg',cv2_img)
-        except:
-            rospy.loginfo("imwrite konnte nicht ausgeführt werden")
+        cv2.imwrite('~/test/'+str(state) + str(time)+'.jpg',cv2_img)
         rospy.loginfo("Image saved")
 
         if state == 0:
