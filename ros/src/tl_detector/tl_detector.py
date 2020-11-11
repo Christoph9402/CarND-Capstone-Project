@@ -135,7 +135,7 @@ class TLDetector(object):
         return -1, TrafficLight.UNKNOWN
 
     def safe_image(self,image,state):
-        path='/test'
+        path='/test/'
         cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
         time=rospy.get_time()
         cv2.imwrite(os.path.join(path, (str(state) + str(time)+'.jpeg')),cv2_img)
