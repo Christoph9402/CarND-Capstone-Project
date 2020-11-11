@@ -10,6 +10,7 @@ from scipy.spatial import KDTree
 from light_classification.tl_classifier import TLClassifier
 import tf
 import cv2
+import os
 import yaml
 
 STATE_COUNT_THRESHOLD = 3
@@ -134,9 +135,10 @@ class TLDetector(object):
         return -1, TrafficLight.UNKNOWN
 
     def safe_image(self,image,state):
+        path='/test'
         cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
         time=rospy.get_time()
-        cv2.imwrite('/test/'+str(state) + str(time)+'.jpeg',cv2_img)
+        cv2.imwrite(os.path.join(path, (str(state) + str(time)+'.jpeg')),cv2_img)
         rospy.loginfo("Image saved")
 
         if state == 0:
