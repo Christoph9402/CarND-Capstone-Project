@@ -138,7 +138,8 @@ class TLDetector(object):
         path='/test/'
         cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
         time=rospy.get_time()
-        cv2.imwrite(os.path.join(path, (str(state) + str(time)+'.jpeg')),cv2_img)
+        #cv2.imwrite(os.path.join(path, (str(state) + str(time)+'.jpeg')),cv2_img)
+        cv2.imwrite(str(state) + str(time) + '.jpeg', cv2_img)
         rospy.loginfo("Image saved")
 
         if state == 0:
