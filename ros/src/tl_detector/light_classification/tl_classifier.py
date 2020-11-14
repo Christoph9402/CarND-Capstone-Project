@@ -7,7 +7,7 @@ import tensorflow as tf
 
 class TLClassifier(object):
     def __init__(self):
-        """
+
         self.config=yaml.load(rospy.get_param("/traffic_light_config"))
         self.model_graph = tf.Graph()
 
@@ -15,8 +15,8 @@ class TLClassifier(object):
 
         with tf.Session(graph=self.model_graph,config=self.config) as sess:
             self.session=sess
-        """
-        pass
+
+        #pass
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
@@ -28,7 +28,7 @@ class TLClassifier(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
-        """
+
         #TODO implement light color prediction
         image_tensor=self.model_graph.get_tensor_by_name('image_tensor:0')
         boxes_tensor=self.model_graph.get_tensor_by_name('boxes_tensor:0')
@@ -56,6 +56,6 @@ class TLClassifier(object):
                 else:
                     self.state=TrafficLight.UNKNOWN
         return self.state
-        """
 
-        return TrafficLight.UNKNOWN
+
+        #return TrafficLight.UNKNOWN
