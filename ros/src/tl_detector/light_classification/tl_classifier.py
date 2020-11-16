@@ -58,7 +58,6 @@ class TLClassifier(object):
                     self.state=TrafficLight.UNKNOWN
         return self.state
 """
-
         return TrafficLight.UNKNOWN
 
     def load_graph(graph_file):
