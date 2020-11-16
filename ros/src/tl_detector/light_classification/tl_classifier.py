@@ -35,7 +35,7 @@ class TLClassifier(object):
 
         #TODO implement light color prediction
 
-"""
+        """
         img=cv2.resize(image,(512,512))
         #img=cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
         with self.model_graph.as_default():
@@ -57,7 +57,7 @@ class TLClassifier(object):
                 else:
                     self.state=TrafficLight.UNKNOWN
         return self.state
-"""
+        """
         return TrafficLight.UNKNOWN
 
     def load_graph(graph_file):
