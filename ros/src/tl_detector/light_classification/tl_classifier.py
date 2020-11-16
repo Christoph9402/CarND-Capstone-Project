@@ -7,7 +7,7 @@ import tensorflow as tf
 
 class TLClassifier(object):
     def __init__(self):
-"""
+        """
         self.config=yaml.load(rospy.get_param("/traffic_light_config"))
         self.model_graph = tf.Graph()
 
