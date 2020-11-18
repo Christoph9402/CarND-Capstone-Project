@@ -22,9 +22,9 @@ class TLClassifier(object):
         classes_tensor = self.model_graph.get_tensor_by_name('classes_tensor:0')
         """
         base_path = os.path.dirname(os.path.abspath(__file__))
-        graph_pth = os.path.join(base_path, 'fine_tuned_model_real_mobilenet', 'frozen_inference_graph.pb')
+        graph_pth = os.path.join(base_path, 'Model', 'frozen_inference_graph.pb')
 
-        label_pth = os.path.join(base_path, 'fine_tuned_model_real_mobilenet', 'labels_map.pbtxt')
+        label_pth = os.path.join(base_path, 'Model', 'labelmap.pbtxt')
 
         self.graph_pth = graph_pth
 
