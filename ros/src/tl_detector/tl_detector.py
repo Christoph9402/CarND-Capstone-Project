@@ -122,14 +122,16 @@ class TLDetector(object):
             temp_wp_idx=self.get_closest_waypoint(line[0],line[1])
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
-                if 5 <= d < 300:
-                    diff=d
-                    closest_light=light
-                    line_wp_idx=temp_wp_idx
+                #if 5 <= d < 300:
+                diff=d
+                closest_light=light
+                line_wp_idx=temp_wp_idx
 
         if closest_light:
             state = self.get_light_state(closest_light)
-            self.safe_image(img,state)
+            rospy.loginfo(state)
+            rospy.loginfo('---------------------------')
+            #self.safe_image(img,state)
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
