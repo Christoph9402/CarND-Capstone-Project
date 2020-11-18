@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 import yaml
 import tensorflow as tf
-import label_map_util
+from object_detection.utils import label_map_util
 import os
 class TLClassifier(object):
     def __init__(self):
