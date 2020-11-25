@@ -5,6 +5,7 @@ import cv2
 import yaml
 import tensorflow as tf
 from object_detection.utils import label_map_util
+import visualization_utils as vis_util
 import os
 class TLClassifier(object):
     def __init__(self):
