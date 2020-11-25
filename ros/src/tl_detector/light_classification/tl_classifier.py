@@ -36,13 +36,7 @@ class TLClassifier(object):
         self.categories = label_map_util.convert_label_map_to_categories(self.label_map, max_num_classes=3, use_display_name=True)
 
         self.category_index = label_map_util.create_category_index(self.categories)
-
-        self.class_map = {
-            1: TrafficLight.RED,
-            2: TrafficLight.YELLOW,
-            3: TrafficLight.GREEN
-        }
-        pass
+        #pass
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
