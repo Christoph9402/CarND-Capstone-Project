@@ -14,7 +14,7 @@ import os
 import yaml
 
 STATE_COUNT_THRESHOLD = 3
-no = 0
+
 class TLDetector(object):
     def __init__(self):
         rospy.init_node('tl_detector')
@@ -127,31 +127,30 @@ class TLDetector(object):
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
                 if d < 300:
-                    no = no+1
+             #       no = no+1
                     diff=d
                     closest_light=light
                     line_wp_idx=temp_wp_idx
-            no=0
+            #no=0
 
         if closest_light:
-            if no%2==0:
-                state = self.get_light_state(closest_light)
-                if state == 2:
-                    state = TrafficLight.RED
-                    rospy.loginfo("Red")
-                elif state == 1:
-                    state = TrafficLight.YELLOW
-                    rospy.loginfo("Yellow")
-                elif state == 0:
-                    state = TrafficLight.GREEN
-                    rospy.loginfo("Green")
-                else:
-                    state= TrafficLight.UNKNOWN
-                    rospy.loginfo("Unknown")
-                rospy.loginfo('---------------------------')
+            state = self.get_light_state(closest_light)
+            if state == 2:
+                state = TrafficLight.RED
+                rospy.loginfo("Red")
+            elif state == 1:
+                state = TrafficLight.YELLOW
+                rospy.loginfo("Yellow")
+            elif state == 0:
+                state = TrafficLight.GREEN
+                rospy.loginfo("Green")
+            else:
+                state= TrafficLight.UNKNOWN
+                rospy.loginfo("Unknown")
+            rospy.loginfo('---------------------------')
                 #self.safe_image(img,state)
 
-                return line_wp_idx, state
+            return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
 
