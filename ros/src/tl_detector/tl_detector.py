@@ -135,13 +135,13 @@ class TLDetector(object):
 
         if closest_light:
             state = self.get_light_state(closest_light)
-            if state == 1:
+            if state == 3:
                 state = TrafficLight.RED
                 rospy.loginfo("Red")
             elif state == 2:
                 state = TrafficLight.YELLOW
                 rospy.loginfo("Yellow")
-            elif state == 3:
+            elif state == 1:
                 state = TrafficLight.GREEN
                 rospy.loginfo("Green")
             else:
