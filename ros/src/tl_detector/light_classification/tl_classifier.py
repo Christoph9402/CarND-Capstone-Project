@@ -81,7 +81,7 @@ class TLClassifier(object):
         return self.state
         """
         with self.detection_graph.as_default():
-            with tf.Session(graph=self.detection_graph) as sess:
+            with tf.compat.v1.Session(graph=self.detection_graph) as sess:
 
                 image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
                 detect_boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
@@ -144,8 +144,8 @@ class TLClassifier(object):
         """Loads a frozen inference graph"""
         graph = tf.Graph()
         with graph.as_default():
-            od_graph_def = tf.GraphDef()
-            with tf.gfile.GFile(graph_file, 'rb') as fid:
+            od_graph_def = tf.compat.v1.GraphDef()
+            with tf.io.gfile.GFile(graph_file, 'rb') as fid:
                 serialized_graph = fid.read()
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
