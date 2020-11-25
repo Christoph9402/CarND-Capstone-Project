@@ -14,7 +14,7 @@ import os
 import yaml
 
 STATE_COUNT_THRESHOLD = 3
-
+no = 0
 class TLDetector(object):
     def __init__(self):
         rospy.init_node('tl_detector')
@@ -52,7 +52,6 @@ class TLDetector(object):
         self.last_state = TrafficLight.UNKNOWN
         self.last_wp = -1
         self.state_count = 0
-        self.no=0
 
         rospy.spin()
 
