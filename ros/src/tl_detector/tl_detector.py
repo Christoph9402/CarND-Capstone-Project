@@ -127,9 +127,9 @@ class TLDetector(object):
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
                 if d < 300:
-                diff=d
-                closest_light=light
-                line_wp_idx=temp_wp_idx
+                    diff=d
+                    closest_light=light
+                    line_wp_idx=temp_wp_idx
 
         if closest_light:
             state = self.get_light_state(closest_light)
