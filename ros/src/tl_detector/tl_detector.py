@@ -141,8 +141,10 @@ class TLDetector(object):
                 state = TrafficLight.GREEN
             elif state == 0:
                 state= TrafficLight.UNKNOWN
+            rospy.loginfo(state)
             rospy.loginfo('---------------------------')
             #self.safe_image(img,state)
+            
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
