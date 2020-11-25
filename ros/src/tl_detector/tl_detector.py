@@ -76,8 +76,12 @@ class TLDetector(object):
 
         """
         #rate=rospy.Rate(5)
-        self.has_image = True
-        self.camera_image = msg
+        try:
+            self.has_image = True
+            self.camera_image = msg
+            rospy.loginfo("Image detected")
+        except:
+            rospy.loginfo("No Image")
         light_wp, state = self.process_traffic_lights(self.camera_image)
 
         '''
@@ -129,7 +133,15 @@ class TLDetector(object):
 
         if closest_light:
             state = self.get_light_state(closest_light)
-            rospy.loginfo(state)
+            #rospy.loginfo(state)
+            if state == 0:
+                rospy.loginfo("Red")
+            elif state ==1:
+                rospy.loginfo("Yellow")
+            elif state ==2:
+                rospy.loginfo("Green")
+            elif state=="None":
+                rospy.loginfo("Not found")
             rospy.loginfo('---------------------------')
             #self.safe_image(img,state)
             return line_wp_idx, state
