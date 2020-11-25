@@ -126,15 +126,15 @@ class TLDetector(object):
             temp_wp_idx=self.get_closest_waypoint(line[0],line[1])
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
+                #only use the classifier if the next traffc light is less than 300 waypoints in front of the car
                 if d < 300:
-             #       no = no+1
                     diff=d
                     closest_light=light
                     line_wp_idx=temp_wp_idx
-            #no=0
 
         if closest_light:
             state = self.get_light_state(closest_light)
+            #since get_light_state only returns a number, it is now converted to the traffic signal which is used for updating the waypoints later
             if state == 3:
                 state = TrafficLight.RED
                 rospy.loginfo("Red")
@@ -148,20 +148,25 @@ class TLDetector(object):
                 state= TrafficLight.UNKNOWN
                 rospy.loginfo("Unknown")
             rospy.loginfo('---------------------------')
-                #self.safe_image(img,state)
+           #call the safe_image function if closest light was detected
+           #self.safe_image(img,state)
 
             return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
 
     def safe_image(self,image,state):
+        #define path to save image
         path='/test/'
+        #convert image to cv2
         cv2_img=self.bridge.imgmsg_to_cv2(image,"bgr8")
+        #get time tamp for a unique image name
         time=rospy.get_time()
         #cv2.imwrite(os.path.join(path, (str(state) + str(time)+'.jpeg')),cv2_img)
+        #safe the image. the first number of the saved images represents the state (0->red, 1->yellow, 2->green)
         cv2.imwrite(str(state) + str(time) + '.jpeg', cv2_img)
         rospy.loginfo("Image saved")
-
+        #print light state to check in terminal
         if state == 0:
             rospy.loginfo("Red")
         elif state ==1:
