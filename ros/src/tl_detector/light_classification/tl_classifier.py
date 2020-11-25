@@ -133,7 +133,7 @@ class TLClassifier(object):
 
                     select = np.argmax(member_scores)
                     winner = members[select]
-
+                    rospy.loginfo(winner)
                     state = self.class_map[winner]
 
                 else:
