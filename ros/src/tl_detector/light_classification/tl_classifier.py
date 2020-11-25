@@ -64,7 +64,7 @@ class TLClassifier(object):
                 (boxes, scores, classes, num) = sess.run(
                     [detect_boxes, detect_scores, detect_classes, num_detections],
                     feed_dict={image_tensor: image_expanded})
-"""
+                """
                 vis_util.visualize_boxes_and_labels_on_image_array(
                     image,
                     np.squeeze(boxes),
@@ -74,7 +74,8 @@ class TLClassifier(object):
                     use_normalized_coordinates=True,
                     max_boxes_to_draw=5,
                     line_thickness=5)
-"""
+                test
+                """
                 boxes = np.squeeze(boxes)
                 scores = np.squeeze(scores)
                 classes = np.squeeze(classes).astype(np.int32)
