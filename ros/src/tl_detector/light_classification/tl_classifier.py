@@ -22,19 +22,18 @@ class TLClassifier(object):
         score_tensor = self.model_graph.get_tensor_by_name('score_tensor:0')
         classes_tensor = self.model_graph.get_tensor_by_name('classes_tensor:0')
         """
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        graph_pth = os.path.join(base_path, 'Model', 'frozen_inference_graph.pb')
-
-        label_pth = os.path.join(base_path, 'Model', 'labelmap.pbtxt')
-
+        path = os.path.dirname(os.path.abspath(__file__))
+        #define path for labelmap and frozen inference model
+        label_pth = os.path.join(path, 'Model', 'labelmap.pbtxt')
+        graph_pth = os.path.join(path, 'Model', 'frozen_inference_graph.pb')
+        #load the frozen inference model
         self.graph_pth = graph_pth
-
         self.detection_graph = self.load_graph(self.graph_pth)
+        #load labelmap
         self.label_pth = label_pth
-
         self.label_map = label_map_util.load_labelmap(label_pth)
+        
         self.categories = label_map_util.convert_label_map_to_categories(self.label_map, max_num_classes=3, use_display_name=True)
-
         self.category_index = label_map_util.create_category_index(self.categories)
         #pass
 
@@ -51,57 +50,47 @@ class TLClassifier(object):
 
         #TODO implement light color prediction
         with self.detection_graph.as_default():
+            #start session compatible for tensorflow ersion 1.x
             with tf.compat.v1.Session(graph=self.detection_graph) as sess:
-
+                
+                np_image = np.expand_dims(image, axis=0)
+                #use get tensor_by_name to extract the tensors, just as in the objec detection lab
                 image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
                 detect_boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
                 detect_scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
                 detect_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
                 num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
-
-                image_expanded = np.expand_dims(image, axis=0)
-
-                (boxes, scores, classes, num) = sess.run(
-                    [detect_boxes, detect_scores, detect_classes, num_detections],
-                    feed_dict={image_tensor: image_expanded})
-                """
-                vis_util.visualize_boxes_and_labels_on_image_array(
-                    image,
-                    np.squeeze(boxes),
-                    np.squeeze(classes).astype(np.int32),
-                    np.squeeze(scores),
-                    self.category_index,
-                    use_normalized_coordinates=True,
-                    max_boxes_to_draw=5,
-                    line_thickness=5)
-                test
-                """
+                #start detection
+                (boxes, scores, classes, num) = sess.run([detect_boxes, detect_scores, detect_classes, num_detections],
+                    feed_dict={image_tensor: np_image})
+                #remove unnecessary dimensions
                 boxes = np.squeeze(boxes)
                 scores = np.squeeze(scores)
                 classes = np.squeeze(classes).astype(np.int32)
+                #define a threshold, which represents lower limit for detection 
+                threshold = scores > 0.8
+                #just look at boxes, scores and classes, if the detection is more than 80percent sure
+                if np.any(threshold):
+                    boxes = boxes[threshold]
+                    scores = scores[threshold]
+                    classes = classes[threshold]
+                    #states represents all detected classes in the image
+                    states, index, counts = np.unique(classes, return_inverse=True, return_counts=True)
+                    state_scores = np.zeros((len(states),))
 
-                keep = scores > 0.8
-
-                if np.any(keep):
-
-                    boxes = boxes[keep]
-                    scores = scores[keep]
-                    classes = classes[keep]
-
-                    members, index, counts = np.unique(classes, return_inverse=True, return_counts=True)
-                    member_scores = np.zeros((len(members),))
-
-                    for i in range(len(members)):
-                        member_scores[i] = np.sum(scores[index == i])
-
-                    winner = members[np.argmax(member_scores)]
-                    #winner = members[select]
-                    state = winner
+                    for i in range(len(states)):
+                       #final state is the one, which has the highest aggregated score
+                        state_scores[i] = np.sum(scores[index == i])
+                    
+                    final = states[np.argmax(state_scores)]
+                    #return the final state
+                    state = final
                     return state
                 else:
+                    
                     state =0
                     return state
-
+    # use the load_graph function that was provided in the object detection lab (adjusted so it iscompatible with tensorflow 1.x)
     def load_graph(self, graph_file):
         """Loads a frozen inference graph"""
         graph = tf.Graph()
