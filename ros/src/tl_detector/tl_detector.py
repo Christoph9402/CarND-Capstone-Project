@@ -52,6 +52,7 @@ class TLDetector(object):
         self.last_state = TrafficLight.UNKNOWN
         self.last_wp = -1
         self.state_count = 0
+        self.no=0
 
         rospy.spin()
 
@@ -127,28 +128,31 @@ class TLDetector(object):
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
                 if d < 300:
+                    no ++
                     diff=d
                     closest_light=light
                     line_wp_idx=temp_wp_idx
+            no=0
 
         if closest_light:
-            state = self.get_light_state(closest_light)
-            if state == 2:
-                state = TrafficLight.RED
-                rospy.loginfo("Red")
-            elif state == 1:
-                state = TrafficLight.YELLOW
-                rospy.loginfo("Yellow")
-            elif state == 0:
-                state = TrafficLight.GREEN
-                rospy.loginfo("Green")
-            else:
-                state= TrafficLight.UNKNOWN
-            rospy.loginfo(state)
-            rospy.loginfo('---------------------------')
-            #self.safe_image(img,state)
-            
-            return line_wp_idx, state
+            if no%2==0:
+                state = self.get_light_state(closest_light)
+                if state == 2:
+                    state = TrafficLight.RED
+                    rospy.loginfo("Red")
+                elif state == 1:
+                    state = TrafficLight.YELLOW
+                    rospy.loginfo("Yellow")
+                elif state == 0:
+                    state = TrafficLight.GREEN
+                    rospy.loginfo("Green")
+                else:
+                    state= TrafficLight.UNKNOWN
+                    rospy.loginfo("Unknown")
+                rospy.loginfo('---------------------------')
+                #self.safe_image(img,state)
+
+                return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
 
