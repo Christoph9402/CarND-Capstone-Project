@@ -136,9 +136,11 @@ class TLClassifier(object):
                     #rospy.loginfo(winner)
                     #state = self.class_map[winner]
                     state = winner
+                    return state
                 else:
                     #state = TrafficLight.UNKNOWN
                     state =0
+                    return state
         #return TrafficLight.UNKNOWN
 
     def load_graph(self, graph_file):
