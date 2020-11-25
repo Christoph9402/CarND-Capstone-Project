@@ -139,7 +139,7 @@ class TLDetector(object):
                 state = TrafficLight.YELLOW
             elif state == 1:
                 state = TrafficLight.GREEN
-            elif state == 0:
+            else:
                 state= TrafficLight.UNKNOWN
             rospy.loginfo(state)
             rospy.loginfo('---------------------------')
