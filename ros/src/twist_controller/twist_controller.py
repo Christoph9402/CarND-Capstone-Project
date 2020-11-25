@@ -45,8 +45,9 @@ class Controller(object):
         sample_time=current_time-self.last_time
         self.last_time=current_time
         throttle=self.throttle_controller.step(vel_error,sample_time)
-        if throttle >=0.2:
-            throttle=0.1
+        # implemented limiter to keep the car relatively slow --> otherwise the performance of the udacity workspace is not enough and the car cant follow the waypoints.
+       # if throttle >=0.2:
+       #     throttle=0.1
         brake = 0
 
         if linear_vel==0. and current_vel < 0.1:
