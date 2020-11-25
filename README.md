@@ -34,55 +34,10 @@ docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capst
 To set up port forwarding, please refer to the "uWebSocketIO Starter Guide" found in the classroom (see Extended Kalman Filter Project lesson).
 
 ### Usage
+To run the program in the Udacity workspace, navigate to the "workspace" dictionary and then run the following inside the terminal:
 
-1. Clone the project repository
-```bash
-git clone https://github.com/udacity/CarND-Capstone.git
+```
+git clone https://github.com/Christoph9402/CarND-Capstone-Project.git && cd CarND-Capstone-Project && pip3 install -r requirements.txt && pip install tensorflow==1.15.0 && pip install matplotlib && cd ros && chmod -R +x src && cd src && cd tl_detector && cd light_classification && PYTHONPATH=$PYTHONPATH:/home/workspace/CarND-Capstone-Project/ros/src/tl_detector/light_classification && export PYTHONPATH && PYTHONPATH=$PYTHONPATH:/home/workspace/CarND-Capstone-Project/ros/src/tl_detector/light_classification/object_detection && export PYTHONPATH && PYTHONPATH=$PYTHONPATH:/home/workspace/CarND-Capstone-Project/ros/src/tl_detector/light_classification/slim && export PYTHONPATH && cd ../ && cd ../ && cd ../  && catkin_make clean && catkin_make && source devel/setup.sh && roslaunch launch/styx.launch --screen
 ```
 
-2. Install python dependencies
-```bash
-cd CarND-Capstone
-pip install -r requirements.txt
-```
-3. Make and run styx
-```bash
-cd ros
-catkin_make
-source devel/setup.sh
-roslaunch launch/styx.launch
-```
-4. Run the simulator
-
-### Real world testing
-1. Download [training bag](https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/traffic_light_bag_file.zip) that was recorded on the Udacity self-driving car.
-2. Unzip the file
-```bash
-unzip traffic_light_bag_file.zip
-```
-3. Play the bag file
-```bash
-rosbag play -l traffic_light_bag_file/traffic_light_training.bag
-```
-4. Launch your project in site mode
-```bash
-cd CarND-Capstone/ros
-roslaunch launch/site.launch
-```
-5. Confirm that traffic light detection works on real life images
-
-### Other library/driver information
-Outside of `requirements.txt`, here is information on other driver/library versions used in the simulator and Carla:
-
-Specific to these libraries, the simulator grader and Carla use the following:
-
-|        | Simulator | Carla  |
-| :-----------: |:-------------:| :-----:|
-| Nvidia driver | 384.130 | 384.130 |
-| CUDA | 8.0.61 | 8.0.61 |
-| cuDNN | 6.0.21 | 6.0.21 |
-| TensorRT | N/A | N/A |
-| OpenCV | 3.2.0-dev | 2.4.8 |
-| OpenMP | N/A | N/A |
-
-We are working on a fix to line up the OpenCV versions between the two.
+Then run the simulator.
