@@ -128,7 +128,7 @@ class TLDetector(object):
             d=temp_wp_idx-car_wp_idx
             if d >= 0 and d < diff:
                 if d < 300:
-                    no ++
+                    no = no+1
                     diff=d
                     closest_light=light
                     line_wp_idx=temp_wp_idx
