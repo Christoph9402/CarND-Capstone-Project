@@ -56,30 +56,6 @@ class TLClassifier(object):
         """
 
         #TODO implement light color prediction
-
-        """
-        img=cv2.resize(image,(512,512))
-        #img=cv2.cvtColor(img,cv2.COLOR_RGB2BGR)
-        with self.model_graph.as_default():
-            (boxes,scores,classes) = self.session.run([boxes_tensor,score_tensor,classes_tensor],feed_dict={image_tensor:np.expand_dims(img,axis=0)})
-
-        classes=np.squeeze(classes)
-        scores=np.squeeze(scores)
-        boxes=np.squeeze(boxes)
-
-        for i in enumerate(boxes):
-            if scores[i] > 0.5:
-                light_state=self.classes[classes[i]]
-                if light_state==0:
-                    self.state=TrafficLight.RED
-                elif light_state==1:
-                    self.state=TrafficLight.YELLOW
-                elif light_state==2:
-                    self.state=TrafficLight.GREEN
-                else:
-                    self.state=TrafficLight.UNKNOWN
-        return self.state
-        """
         with self.detection_graph.as_default():
             with tf.compat.v1.Session(graph=self.detection_graph) as sess:
 
@@ -94,7 +70,7 @@ class TLClassifier(object):
                 (boxes, scores, classes, num) = sess.run(
                     [detect_boxes, detect_scores, detect_classes, num_detections],
                     feed_dict={image_tensor: image_expanded})
-
+"""
                 vis_util.visualize_boxes_and_labels_on_image_array(
                     image,
                     np.squeeze(boxes),
@@ -104,21 +80,13 @@ class TLClassifier(object):
                     use_normalized_coordinates=True,
                     max_boxes_to_draw=5,
                     line_thickness=5)
-
+"""
                 boxes = np.squeeze(boxes)
                 scores = np.squeeze(scores)
                 classes = np.squeeze(classes).astype(np.int32)
 
                 keep = scores > 0.8
 
-                # if scores[0] > 0.5:
-
-                #     state = self.class_map[classes[0]]
-
-                # else:
-                #     state = TrafficLight.UNKNOWN
-
-                #### select the dominant traffic light class
                 if np.any(keep):
 
                     boxes = boxes[keep]
@@ -131,17 +99,13 @@ class TLClassifier(object):
                     for i in range(len(members)):
                         member_scores[i] = np.sum(scores[index == i])
 
-                    select = np.argmax(member_scores)
-                    winner = members[select]
-                    #rospy.loginfo(winner)
-                    #state = self.class_map[winner]
+                    winner = members[np.argmax(member_scores)]
+                    #winner = members[select]
                     state = winner
                     return state
                 else:
-                    #state = TrafficLight.UNKNOWN
                     state =0
                     return state
-        #return TrafficLight.UNKNOWN
 
     def load_graph(self, graph_file):
         """Loads a frozen inference graph"""
