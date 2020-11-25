@@ -109,7 +109,7 @@ class TLClassifier(object):
                 scores = np.squeeze(scores)
                 classes = np.squeeze(classes).astype(np.int32)
 
-                keep = scores > 0.5
+                keep = scores > 0.8
 
                 # if scores[0] > 0.5:
 
