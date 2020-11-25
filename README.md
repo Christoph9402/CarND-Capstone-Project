@@ -34,7 +34,11 @@ docker run -p 4567:4567 -v $PWD:/capstone -v /tmp/log:/root/.ros/ --rm -it capst
 To set up port forwarding, please refer to the "uWebSocketIO Starter Guide" found in the classroom (see Extended Kalman Filter Project lesson).
 
 ### Usage
+To run the program in the Udacity workspace, navigate to the "workspace" dictionary and then run the following inside the terminal:
 
+```
+git clone https://github.com/Christoph9402/CarND-Capstone-Project.git && cd CarND-Capstone-Project && pip3 install -r requirements.txt && pip install tensorflow==1.15.0 && pip install matplotlib && cd ros && chmod -R +x src && cd src && cd tl_detector && cd light_classification && PYTHONPATH=$PYTHONPATH:/home/workspace/CarND-Capstone-Project/ros/src/tl_detector/light_classification && export PYTHONPATH && PYTHONPATH=$PYTHONPATH:/home/workspace/CarND-Capstone-Project/ros/src/tl_detector/light_classification/object_detection && export PYTHONPATH && PYTHONPATH=$PYTHONPATH:/home/workspace/CarND-Capstone-Project/ros/src/tl_detector/light_classification/slim && export PYTHONPATH && cd ../ && cd ../ && cd ../  && catkin_make clean && catkin_make && source devel/setup.sh && roslaunch launch/styx.launch --screen
+```
 1. Clone the project repository
 ```bash
 git clone https://github.com/udacity/CarND-Capstone.git
