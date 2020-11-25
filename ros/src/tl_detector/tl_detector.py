@@ -75,7 +75,7 @@ class TLDetector(object):
             msg (Image): image from car-mounted camera
 
         """
-        #rate=rospy.Rate(5)
+        rate=rospy.Rate(5)
         try:
             self.has_image = True
             self.camera_image = msg
